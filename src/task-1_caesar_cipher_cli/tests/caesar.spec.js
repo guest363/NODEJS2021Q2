@@ -59,6 +59,13 @@ describe("Проверка работы шифра Цезаря", () => {
       );
       assert.stdout(myCLI, "ifmmpx");
     });
+
+    it("Расшифровать со сдвигом больше алфавита shift = -25 ifmmpx -> hellow", () => {
+      const myCLI = chaiExec(
+        `${script} -a decode -i ${commonPath}/tests/texts/t2.txt -s -25`
+      );
+      assert.stdout(myCLI, "hellow");
+    });
   });
 });
 
