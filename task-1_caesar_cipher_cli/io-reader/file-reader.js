@@ -1,4 +1,5 @@
 import fs from "fs";
+import { errorAction } from "../error-action.js";
 
 /**
  * Создает поток чтения\записи в файл
@@ -21,8 +22,7 @@ export const fileReader = ({ param, rwType }) => {
     returndStream.on("error", (error) => {
       const customError = errorMessages[error.code] || error.message;
 
-      process.stderr.write(customError);
-      process.exit(0);
+      errorAction(customError);
     });
 
     return returndStream;

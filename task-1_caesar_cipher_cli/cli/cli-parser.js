@@ -1,4 +1,5 @@
 import commander from "commander";
+import { errorAction } from "../error-action.js";
 
 /**
  * Если задан параметр как в короткой нотации, -а, так и в
@@ -24,8 +25,8 @@ export const cliParser = (process) => {
       "Implement CLI tool that encode and decode a text by Caesar cipher"
     )
     .option("-s, --shift <number>", "a shift", 0)
-    .option("-i, --input <type>", "an input file", "process.stdin")
-    .option("-o, --output <type>", "an output file", "process.stdout")
+    .option("-i, --input <type>", "an input file, default - process.stdin")
+    .option("-o, --output <type>", "an output file default - process.stdout")
     .requiredOption("-a, --action <type>", "encode | decode");
 
   const argv = commander.parse().opts();
@@ -41,7 +42,5 @@ export const cliParser = (process) => {
     };
     return parcedCliOpt;
   }
-
-  process.stderr.write("The action param is must be encode or decode");
-  process.exit(1);
+  errorAction("The action param is must be encode or decode");
 };
