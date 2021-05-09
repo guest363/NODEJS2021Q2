@@ -31,6 +31,12 @@ export const cliParser = (process) => {
 
   const argv = commander.parse().opts();
   const action = argv.action;
+  const isSomeIOFile =
+    typeof argv.input === "string" || typeof argv.output === "string";
+    
+  if (isSomeIOFile && argv.input === argv.output) {
+    errorAction("The output and input file must not be the same");
+  }
 
   if (action === "encode" || action === "decode") {
     const parcedCliOpt = {

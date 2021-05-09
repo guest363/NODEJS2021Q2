@@ -18,7 +18,6 @@ const runPipe = async () => {
   await pipeline(
     readStream, // input file stream or stdin stream
     async function* (source) {
-      source.setEncoding("utf8"); // Work with strings rather than `Buffer`s.
       for await (const chunk of source) {
         yield cipher(chunk);
       }

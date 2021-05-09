@@ -22,6 +22,12 @@ describe("Проверка работы шифра Цезаря", () => {
       const myCLI = chaiExec(`${script} -a decode`);
       assert.exitCode(myCLI, 0);
     });
+
+    it("Ошибка если входной и выходной файл один и тот же", () => {
+      const myCLI = chaiExec(`${script} -a decode -i ./src/text -o ./src/text`);
+      assert.exitCode(myCLI, 1);
+      assert.stderr(myCLI, "The output and input file must not be the same");
+    });
   });
 
   describe("Проверка правильности работы шифратора", () => {
