@@ -72,6 +72,13 @@ describe("Проверка работы шифра Цезаря", () => {
       );
       assert.stdout(myCLI, "hellow");
     });
+
+    it("Зашифровать c символами не английского алфавита shift = 1 hell_ow 12345 -> ifmm_px 12345", () => {
+      const myCLI = chaiExec(
+        `${script} -a encode -i ${commonPath}/tests/texts/t3.txt -s 1`
+      );
+      assert.stdout(myCLI, "ifmm_px 12345");
+    });
   });
 });
 

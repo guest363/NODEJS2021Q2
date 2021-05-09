@@ -8,12 +8,14 @@ export const shifter = (shift) => (letters) => {
   const output = [];
   for (let letter of letters) {
     /**
+     * Так как в нашем обьекте с алфавитом есть и цифровые поля
      * Если это не буква английского алфавита, то она не шифруется,
      * а возвращается как есть
      */
-    if (alphabetObject[letter] === void 0) {
+    if (!Number.isNaN(parseInt(letter)) || alphabetObject[letter] === void 0) {
       output.push(letter);
     }
+
     /** Индекс текущего символа */
     const startPosition = alphabetObject[letter];
     /** Индекс уже зашифрованной буквы */
