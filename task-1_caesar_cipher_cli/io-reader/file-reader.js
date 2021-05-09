@@ -9,8 +9,8 @@ import fs from "fs";
 export const fileReader = ({ param, rwType }) => {
   if (typeof param === "string") {
     return rwType === "read"
-      ? fs.createReadStream(param)
-      : fs.createWriteStream(param);
+      ? fs.createReadStream(param, { encoding: "utf-8", highWaterMark: 1 })
+      : fs.createWriteStream(param, { encoding: "utf-8", flags: "w+" });
   }
   return param;
 };

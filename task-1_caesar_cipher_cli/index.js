@@ -8,11 +8,17 @@ const independentShift = getIndependShift({
   shift: cliParams.shift,
   action: cliParams.action,
 });
+console.log(independentShift);
 const cipher = shifter(independentShift);
 const readStream = ioReader({ param: cliParams.input, rwType: "read" });
-const writeStream = ioReader({ param: cliParams.output, rwType: "write" });
 
+const messageToWrite = [];
 readStream.on("data", (chunk) => {
-  console.log(chunk);
-  //writeStream.write(cipher());
+  messageToWrite.push(cipher(chunk));
+});
+
+readStream.on("close", () => {
+  const writeStream = ioReader({ param: cliParams.output, rwType: "write" });
+
+  writeStream.write(messageToWrite.join(""));
 });

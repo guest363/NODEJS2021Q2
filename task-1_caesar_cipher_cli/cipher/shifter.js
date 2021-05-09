@@ -1,5 +1,5 @@
-import { alphabetObject } from "./alphabetObject";
-import { ENG_MODULE_ALPHABET } from "./constants";
+import { alphabetObject } from "./alphabetObject.js";
+import { ENG_MODULE_ALPHABET } from "./constants.js";
 
 /**
  * Осуществляет сдвиг
@@ -15,7 +15,7 @@ export const shifter = (shift) => (letter) => {
   /** Индекс текущего символа */
   const startPosition = alphabetObject[letter];
   /** Индекс уже зашифрованной буквы */
-  const newPosition = (startPosition + shift) % ENG_MODULE_ALPHABET;
+  const newPosition = Math.abs(startPosition + shift) % ENG_MODULE_ALPHABET;
   /**
    * - Смещение прти расшифрование будет отрицательным
    * - Смещение может быть сколь угодно большим и должно сдвигать

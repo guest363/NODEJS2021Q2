@@ -1,4 +1,4 @@
-import { fileReader } from "./file-reader";
+import { fileReader } from "./file-reader.js";
 
 /**
  * Читает файл или поток ввода\вывода

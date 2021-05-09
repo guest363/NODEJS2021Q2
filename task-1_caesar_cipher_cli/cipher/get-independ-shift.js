@@ -1,9 +1,11 @@
-import { ENG_MODULE_ALPHABET } from "./constants";
+import { ENG_MODULE_ALPHABET } from "./constants.js";
 
 /**
  * Устанавливает правильное смещение в зависимости
  * от того нужно ли зашифровать или расшифровать файл
  */
 export const getIndependShift = ({ shift, action }) => {
-  return action === "decode" ? shift - ENG_MODULE_ALPHABET : shift;
+  const decodeShift = ENG_MODULE_ALPHABET - (shift % ENG_MODULE_ALPHABET);
+
+  return action === "decode" ? decodeShift : shift;
 };
