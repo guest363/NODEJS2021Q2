@@ -32,6 +32,6 @@ export const cliParser = (process) => {
     return parcedCliOpt;
   }
 
-  console.log("The action param is required");
+  process.stderr.write("The action param is required");
   process.exit(1);
 };
