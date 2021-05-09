@@ -22,13 +22,15 @@ const runPipe = async () => {
       for await (const chunk of source) {
         yield cipher(chunk);
       }
+      /** Перенос строки после того как дописали в файл */
+      yield "\n";
     }, // Transform stream
     writeStream, // output file stream or stdout stream
     (err) => {
       if (err) {
-        console.error("Pipeline failed.", err);
+        console.error(`Failed ${cliParams.action}`, err);
       } else {
-        console.log("Pipeline succeeded.");
+        console.log(`File success ${cliParams.action}`);
       }
     }
   );

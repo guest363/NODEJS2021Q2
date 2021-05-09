@@ -17,7 +17,7 @@ export const fileReader = ({ param, rwType }) => {
     const returndStream =
       rwType === "read"
         ? fs.createReadStream(param, { encoding: "utf-8"})
-        : fs.createWriteStream(param, { encoding: "utf-8", flags: "w+" });
+        : fs.createWriteStream(param, { encoding: "utf-8", flags: "a" });
 
     returndStream.on("error", (error) => {
       const customError = errorMessages[error.code] || error.message;
