@@ -1,4 +1,4 @@
-import minimist from "minimist";
+import commander from "commander";
 
 /**
  * Если задан параметр как в короткой нотации, -а, так и в
@@ -19,19 +19,29 @@ import minimist from "minimist";
  *
  */
 export const cliParser = (process) => {
-  const argv = minimist(process.argv.slice(2));
-  const action = argv.action ?? argv.a;
-  if (action) {
+  commander
+    .description(
+      "Implement CLI tool that encode and decode a text by Caesar cipher"
+    )
+    .option("-s, --shift <number>", "a shift", 0)
+    .option("-i, --input <type>", "an input file", "process.stdin")
+    .option("-o, --output <type>", "an output file", "process.stdout")
+    .requiredOption("-a, --action <type>", "encode | decode");
+
+  const argv = commander.parse().opts();
+  const action = argv.action;
+
+  if (action === "encode" || action === "decode") {
     const parcedCliOpt = {
       // 0 shift фактически ничего не делает с файлом
-      shift: argv.shift || argv.s || 0,
-      input: argv.input || argv.i || process.stdin,
-      output: argv.output || argv.o || process.stdout,
+      shift: parseInt(argv.shift),
+      input: argv.input || process.stdin,
+      output: argv.output || process.stdout,
       action,
     };
     return parcedCliOpt;
   }
 
-  process.stderr.write("The action param is required");
+  process.stderr.write("The action param is must be encode or decode");
   process.exit(1);
 };
