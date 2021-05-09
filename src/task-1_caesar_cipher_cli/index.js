@@ -3,6 +3,7 @@ import { ioReader } from "./io-reader/io-reader.js";
 import { shifter } from "./cipher/shifter.js";
 import { getIndependShift } from "./cipher/get-independ-shift.js";
 import { pipeline } from "stream";
+import { transformer } from "./io-reader/transformer.js";
 
 const cliParams = cliParser(process);
 const independentShift = getIndependShift({
@@ -17,14 +18,7 @@ const writeStream = ioReader({ param: cliParams.output, rwType: "write" });
 const runPipe = async () => {
   await pipeline(
     readStream, // input file stream or stdin stream
-    async function* (source) {
-      source.setEncoding("utf8"); // Work with strings rather than `Buffer`s.
-      for await (const chunk of source) {
-        yield cipher(chunk);
-      }
-      /** Перенос строки после того как дописали в файл */
-      yield "\n";
-    }, // Transform stream
+    transformer(cipher),
     writeStream, // output file stream or stdout stream
     (err) => {
       if (err) {
