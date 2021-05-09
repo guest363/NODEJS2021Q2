@@ -16,7 +16,7 @@ export const fileReader = ({ param, rwType }) => {
   if (typeof param === "string") {
     const returndStream =
       rwType === "read"
-        ? fs.createReadStream(param, { encoding: "utf-8", highWaterMark: 1 })
+        ? fs.createReadStream(param, { encoding: "utf-8"})
         : fs.createWriteStream(param, { encoding: "utf-8", flags: "w+" });
 
     returndStream.on("error", (error) => {
