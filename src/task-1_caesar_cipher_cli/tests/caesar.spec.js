@@ -79,6 +79,13 @@ describe("Проверка работы шифра Цезаря", () => {
       );
       assert.stdout(myCLI, "ifmm_px 12345");
     });
+
+    it("Зашифровать только с символами не английского алфавита shift = 1 привет -> привет", () => {
+      const myCLI = chaiExec(
+        `${script} -a encode -i ${commonPath}/tests/texts/t4.txt -s 1`
+      );
+      assert.stdout(myCLI, "привет");
+    });
   });
 });
 
