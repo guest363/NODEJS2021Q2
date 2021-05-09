@@ -2,8 +2,8 @@ import chaiExec from "@jsdevtools/chai-exec";
 import chai from "chai";
 const assert = chai.assert;
 chai.use(chaiExec);
-
-const script = "node ./src/task-1_caesar_cipher_cli/index.js";
+const commonPath = "./src/task-1_caesar_cipher_cli";
+const script = `node ${commonPath}/index.js`;
 
 describe("Проверка работы шифра Цезаря", () => {
   describe("Проверка парсинга cli параметров", () => {
@@ -21,6 +21,43 @@ describe("Проверка работы шифра Цезаря", () => {
     it("Нет ошибки если передан только параметр action", () => {
       const myCLI = chaiExec(`${script} -a decode`);
       assert.exitCode(myCLI, 0);
+    });
+  });
+
+  describe("Проверка правильности работы шифратора", () => {
+    it("Зашифровать shift = 1 hellow -> ifmmpx", () => {
+      const myCLI = chaiExec(
+        `${script} -a encode -i ${commonPath}/tests/texts/t1.txt -s 1`
+      );
+      assert.stdout(myCLI, "ifmmpx");
+    });
+
+    it("Расшифровать shift = 1 ifmmpx -> hellow", () => {
+      const myCLI = chaiExec(
+        `${script} -a decode -i ${commonPath}/tests/texts/t2.txt -s 1`
+      );
+      assert.stdout(myCLI, "hellow");
+    });
+
+    it("Расшифровать со сдвигом больше алфавита shift = 27 ifmmpx -> hellow", () => {
+      const myCLI = chaiExec(
+        `${script} -a decode -i ${commonPath}/tests/texts/t2.txt -s 27`
+      );
+      assert.stdout(myCLI, "hellow");
+    });
+
+    it("Зашифровать со сдвигом больше алфавита shift = 27 hellow -> ifmmpx", () => {
+      const myCLI = chaiExec(
+        `${script} -a encode -i ${commonPath}/tests/texts/t1.txt -s 27`
+      );
+      assert.stdout(myCLI, "ifmmpx");
+    });
+
+    it("Зашифровать с отрицательным сдвигом shift = -25 hellow -> ifmmpx", () => {
+      const myCLI = chaiExec(
+        `${script} -a encode -i ${commonPath}/tests/texts/t1.txt -s -25`
+      );
+      assert.stdout(myCLI, "ifmmpx");
     });
   });
 });
