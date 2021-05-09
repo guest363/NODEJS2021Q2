@@ -8,7 +8,7 @@ const independentShift = getIndependShift({
   shift: cliParams.shift,
   action: cliParams.action,
 });
-console.log(independentShift);
+
 const cipher = shifter(independentShift);
 const readStream = ioReader({ param: cliParams.input, rwType: "read" });
 
@@ -17,6 +17,10 @@ readStream.on("data", (chunk) => {
   messageToWrite.push(cipher(chunk));
 });
 
+/**
+ * Создаем поток записи после закрытия потока чтения
+ * чтобы была возможность читать и писать в один и тот же файл
+ */
 readStream.on("close", () => {
   const writeStream = ioReader({ param: cliParams.output, rwType: "write" });
 
