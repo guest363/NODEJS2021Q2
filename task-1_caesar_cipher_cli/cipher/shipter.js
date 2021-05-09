@@ -1,9 +1,9 @@
 import { alphabetObject } from "./alphabetObject";
 import { ENG_MODULE_ALPHABET } from "./constants";
+
 /**
  * Осуществляет сдвиг
  */
-
 export const shifter = (shift) => (letter) => {
   /**
    * Если это не буква английского алфавита, то она не шифруется,

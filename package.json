@@ -1,1 +1,1 @@
-{"type":"module","author": "Oleg Moiseev"}
+{"type":"module","author":"Oleg Moiseev","dependencies":{"minimist":"^1.2.5"}}
