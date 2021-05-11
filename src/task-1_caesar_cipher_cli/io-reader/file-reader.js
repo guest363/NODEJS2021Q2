@@ -12,19 +12,19 @@ export const fileReader = ({ param, rwType }) => {
   const errorMessages = {
     ENOENT: `No such ${rwType === "read" ? "input" : "output"} file`,
   };
-  /**
-   *  Если файла на запись или чтения нет, но параметр передан
-   *  выбросить ошибку и завершить выполнение
-   *  */
-  try {
-    if (!fs.existsSync(param)) {
-      errorAction(errorMessages["ENOENT"]);
-    }
-  } catch (err) {
-    errorAction("Error to access file");
-  }
 
   if (typeof param === "string") {
+    /**
+     *  Если файла на запись или чтения нет, но параметр передан
+     *  выбросить ошибку и завершить выполнение
+     *  */
+    try {
+      if (!fs.existsSync(param)) {
+        errorAction(errorMessages["ENOENT"]);
+      }
+    } catch (err) {
+      errorAction("Error to access file");
+    }
     const returndStream =
       rwType === "read"
         ? fs.createReadStream(param, { encoding: "utf-8" })
