@@ -35,56 +35,63 @@ describe("Проверка работы шифра Цезаря", () => {
       const myCLI = chaiExec(
         `${script} -a encode -i ${commonPath}/tests/texts/t1.txt -s 1`
       );
-      assert.stdout(myCLI, "ifmmpx");
+      assert.stdout(myCLI, "ifmmpx\n");
     });
 
     it("Расшифровать shift = 1 ifmmpx -> hellow", () => {
       const myCLI = chaiExec(
         `${script} -a decode -i ${commonPath}/tests/texts/t2.txt -s 1`
       );
-      assert.stdout(myCLI, "hellow");
+      assert.stdout(myCLI, "hellow\n");
     });
 
     it("Расшифровать со сдвигом больше алфавита shift = 27 ifmmpx -> hellow", () => {
       const myCLI = chaiExec(
         `${script} -a decode -i ${commonPath}/tests/texts/t2.txt -s 27`
       );
-      assert.stdout(myCLI, "hellow");
+      assert.stdout(myCLI, "hellow\n");
     });
 
     it("Зашифровать со сдвигом больше алфавита shift = 27 hellow -> ifmmpx", () => {
       const myCLI = chaiExec(
         `${script} -a encode -i ${commonPath}/tests/texts/t1.txt -s 27`
       );
-      assert.stdout(myCLI, "ifmmpx");
+      assert.stdout(myCLI, "ifmmpx\n");
     });
 
     it("Зашифровать с отрицательным сдвигом shift = -25 hellow -> ifmmpx", () => {
       const myCLI = chaiExec(
         `${script} -a encode -i ${commonPath}/tests/texts/t1.txt -s -25`
       );
-      assert.stdout(myCLI, "ifmmpx");
+      assert.stdout(myCLI, "ifmmpx\n");
     });
 
     it("Расшифровать со сдвигом больше алфавита shift = -25 ifmmpx -> hellow", () => {
       const myCLI = chaiExec(
         `${script} -a decode -i ${commonPath}/tests/texts/t2.txt -s -25`
       );
-      assert.stdout(myCLI, "hellow");
+      assert.stdout(myCLI, "hellow\n");
     });
 
     it("Зашифровать c символами не английского алфавита shift = 1 hell_ow 12345 -> ifmm_px 12345", () => {
       const myCLI = chaiExec(
         `${script} -a encode -i ${commonPath}/tests/texts/t3.txt -s 1`
       );
-      assert.stdout(myCLI, "ifmm_px 12345");
+      assert.stdout(myCLI, "ifmm_px 12345\n");
     });
 
     it("Зашифровать только с символами не английского алфавита shift = 1 привет -> привет", () => {
       const myCLI = chaiExec(
         `${script} -a encode -i ${commonPath}/tests/texts/t4.txt -s 1`
       );
-      assert.stdout(myCLI, "привет");
+      assert.stdout(myCLI, "привет\n");
+    });
+
+    it("Зашифровать c проверкой сохранения регистра shift = 1 Hellow World -> Ifmmpx Xpsme", () => {
+      const myCLI = chaiExec(
+        `${script} -a encode -i ${commonPath}/tests/texts/t5.txt -s 1`
+      );
+      assert.stdout(myCLI, "Ifmmpx Xpsme\n");
     });
   });
 });
